@@ -38,7 +38,7 @@ def drop_piece(board, col, player):
 def winning_move(board, player):
 # ---- แนวนอน
     for r in range(ROWS):
-        for c in range(COLS - 2): 
+        for c in range(COLS - 3): 
             if(
                  board[r][c] == player and board[r][c+1] == player
                 and board[r][c+2] == player and board[r][c+3] == player
@@ -70,16 +70,3 @@ def winning_move(board, player):
                 return True
     return False
 
-board = create_board()
-drop_piece(board, 3, YELLOW)
-drop_piece(board, 2, RED)
-drop_piece(board, 2, YELLOW)
-drop_piece(board, 1, RED)
-drop_piece(board, 1, RED)
-drop_piece(board, 1, YELLOW)
-drop_piece(board, 0, RED)
-drop_piece(board, 0, RED)
-drop_piece(board, 0, RED)
-drop_piece(board, 0, YELLOW)
-print_board(board)
-print(winning_move(board, YELLOW))
