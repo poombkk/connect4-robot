@@ -21,11 +21,23 @@ def test_horizontal_win():
     assert winning_move(b, YELLOW) == False
 
 def test_vertical_win():
+    c = 0
     b = create_board()
-    for i in range(4):
-        drop_piece(b, 0, RED)
-    assert winning_move(b, RED) == True
-    assert winning_move(b, YELLOW) == False
+    for i in range(7):
+        for a in range(c):
+            drop_piece(b, i, YELLOW)
+        for r in range(4):
+            drop_piece(b, i, RED)
+        assert winning_move(b, RED) == True
+        assert winning_move(b, YELLOW) == False
+
+def test_vertical_win():
+    b = create_board()
+    for i in range(7):
+        for r in range(4):
+            drop_piece(b, i, RED)
+        assert winning_move(b, RED) == True
+        assert winning_move(b, YELLOW) == False
 
 def test_diag_up_win():
     b = create_board()

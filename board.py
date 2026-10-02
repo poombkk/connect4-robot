@@ -54,7 +54,7 @@ def winning_move(board, player):
                 return True
 # ---- ทแยงขึ้น
     for r in range(ROWS - 3):
-        for c in range(COLS):
+        for c in range(COLS - 3):
             if(
                  board[r][c] == player and board[r+1][c+1] == player 
                 and board[r+2][c+2] == player and board[r+3][c+3] == player
@@ -62,7 +62,7 @@ def winning_move(board, player):
                 return True
 # ---- ทแยงลง
     for r in range(ROWS -1, 2, -1):
-        for c in range(COLS):
+        for c in range(COLS -3):
             if(
                  board[r][c] == player and board[r-1][c+1] == player 
                 and board[r-2][c+2] == player and board[r-3][c+3] == player
@@ -70,3 +70,11 @@ def winning_move(board, player):
                 return True
     return False
 
+def is_board_full(board):
+    r = 0
+    for i in range(COLS):
+        if board[5][i] != EMPTY:
+             r += 1
+        if r == 7:
+            return True
+    return False
