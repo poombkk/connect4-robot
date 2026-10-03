@@ -1,4 +1,5 @@
 from board import *
+from ai import *
 
 def ask_column(board, player):
     while True:
@@ -11,13 +12,15 @@ def ask_column(board, player):
         return col
 
 
+brains = {RED: random_move, YELLOW: random_move}
 
 def main():
     board = create_board()
     player = RED
     while True:
         print_board(board)
-        col = ask_column(board, player)
+        #col = ask_column(board, player)
+        col = brains[player](board, player)
         drop_piece(board, col, player)
         if winning_move(board, player):
             print_board(board) ; print("RED WIN!") ; break
