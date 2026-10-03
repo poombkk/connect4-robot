@@ -23,7 +23,11 @@ def main():
         col = brains[player](board, player)
         drop_piece(board, col, player)
         if winning_move(board, player):
-            print_board(board) ; print("RED WIN!") ; break
+            if player == 1:
+                Winner = "RED"
+            else:
+                Winner = "YELLOW"
+            print_board(board) ; print((Winner),"WIN!") ; break
         if is_board_full(board):
             print_board(board) ; print("TIE!") ; break
         if player == RED:
