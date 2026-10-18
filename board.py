@@ -10,9 +10,9 @@ def create_board():
 
 def print_board(board):
     print("  0 1 2 3 4 5 6")
-    for r in range(5,-1,-1) :
+    for r in range(ROWS - 1,-1,-1) :
         line = str(r) + " "
-        for c in range(7):
+        for c in range(COLS):
             cell = board[r][c]
             symbol = "." if cell == EMPTY else ("R" if cell == RED else "Y")
             line = line + symbol + " "
@@ -29,7 +29,7 @@ def get_next_open_row(board, col):
 
 def drop_piece(board, col, player):
     if not is_valid_move(board, col):
-        return -1
+        return None
 
     r = get_next_open_row(board, col)
     board[r][col] = player
@@ -78,3 +78,11 @@ def is_board_full(board):
         if r == 7:
             return True
     return False
+
+
+def find_opp(player):
+    if player == RED:
+        opp = YELLOW
+    else:
+        opp = RED  
+    return opp

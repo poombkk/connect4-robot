@@ -13,7 +13,7 @@ def ask_column(board, player):
             print("column is full please try others column (0-6): ") ; continue
         return col 
 
-brains = {RED: ask_column, YELLOW: greedy_move}
+brains = {RED: ask_column, YELLOW: minimax_move}
 
 def main():
     board = create_board()

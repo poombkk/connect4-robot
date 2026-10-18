@@ -1,5 +1,6 @@
 import random
 import copy
+import math
 
 from board import *
 
@@ -19,10 +20,7 @@ def score_window(window, player):
     mine = 0
     theirs = 0
     empty = 0
-    if player == RED:
-        opp = YELLOW
-    else:
-        opp = RED
+    opp = find_opp(player)
     for r in range(len(window)):
         if window[r] == player:
             mine += 1
@@ -42,10 +40,7 @@ def score_window(window, player):
     return 0
 
 def score_position(board, player):
-    if player == RED:
-        opp = YELLOW
-    else:
-        opp = RED
+    opp = find_opp(player)
     score = 0
     for r in range(ROWS):
         if board[r][3] == player:
@@ -108,4 +103,48 @@ def greedy_move(board, player):
             best_score = score
             best_col = col
     return best_col
-        
+
+WIN_SCORE = 1000000 
+def minimax(board, depth, alpha, beta, maximizing, me):
+    opp = find_opp(me)  
+    cols = valid_columns(board)
+    if winning_move(board, me):
+        return (None, +WIN_SCORE + depth) 
+    if winning_move(board, opp):
+        return (None, -WIN_SCORE )
+    if cols == None:
+        return (None, 0) # เสมอ
+    if depth == 0:
+        return (None, score_position(board, me))
+    if maximizing:
+        best_score = -math.inf 
+        best_col = cols[0]
+        for col in cols:
+            temp = copy.deepcopy(board) 
+            drop_piece(temp, col, me)
+            _, s = minimax(temp, depth-1, alpha, beta, False, me) 
+            if s > best_score: 
+                best_score = s 
+                best_col = col
+            alpha = max(alpha, best_score)
+            if alpha >= beta:
+                break
+        return (best_col, best_score)
+    else:
+        best_score = +math.inf 
+        best_col = cols[0]
+        for col in cols:
+            temp = copy.deepcopy(board) 
+            drop_piece(temp, col, True )
+            _, s = minimax(temp, depth-1, alpha, beta, True, me)
+            if s < best_score:
+                best_score = s 
+                best_col = col
+            beta = min( beta , best_score)
+            if alpha >= beta:
+                break
+        return (best_col, best_score)
+    
+def minimax_move(board, player, depth=5):
+    col, _ = minimax(board, depth, -math.inf, math.inf, True, player)
+    return col
