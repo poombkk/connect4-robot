@@ -148,3 +148,4 @@ def minimax(board, depth, alpha, beta, maximizing, me):
 def minimax_move(board, player, depth=5):
     col, _ = minimax(board, depth, -math.inf, math.inf, True, player)
     return col
+
