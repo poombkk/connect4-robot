@@ -43,12 +43,12 @@ def score_position(board, player):
     opp = find_opp(player)
     score = 0
     for r in range(ROWS):
-        if board[r][3] == player:
-            score += 2
+        if board[r][3] == player and r < 3:
+            score += 5
     for r in range(ROWS):
         for c in range(COLS):
             for d in range(4):
-                window = [[],[],[],[]]
+                window = []
                 for w in range(4):
                     # up
                     if d == 0 and r <= 2:
@@ -59,7 +59,7 @@ def score_position(board, player):
 
                     # upright
                     if d == 1 and r <= 2 and c <= 3:
-                        if r > 0 and board[r + w - 1][c + w] == EMPTY:
+                        if r >= 0 and board[r + w - 1][c + w] == EMPTY:
                             window = []
                             break
                         if board[r + w][c + w] == opp:
@@ -68,7 +68,7 @@ def score_position(board, player):
                         window.append(board[r + w][c + w])
                     # right
                     if d == 2 and c <= 3:
-                        if r > 0 and board[r - 1][c + w] == EMPTY:
+                        if r >= 0 and board[r - 1][c + w] == EMPTY:
                             window = []
                             break
                         if board[r][c + w] == opp:
@@ -111,7 +111,7 @@ def minimax(board, depth, alpha, beta, maximizing, me):
     if winning_move(board, me):
         return (None, +WIN_SCORE + depth) 
     if winning_move(board, opp):
-        return (None, -WIN_SCORE + depth)
+        return (None, -WIN_SCORE - depth)
     if cols == []:
         return (None, 0) # เสมอ
     if depth == 0:
@@ -145,7 +145,7 @@ def minimax(board, depth, alpha, beta, maximizing, me):
                 break
         return (best_col, best_score)
     
-def minimax_move(board, player, depth=5):
+def minimax_move(board, player, depth=7):
     col, _ = minimax(board, depth, -math.inf, math.inf, True, player)
     return col
 
