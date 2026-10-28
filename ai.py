@@ -111,8 +111,8 @@ def minimax(board, depth, alpha, beta, maximizing, me):
     if winning_move(board, me):
         return (None, +WIN_SCORE + depth) 
     if winning_move(board, opp):
-        return (None, -WIN_SCORE )
-    if cols == None:
+        return (None, -WIN_SCORE + depth)
+    if cols == []:
         return (None, 0) # เสมอ
     if depth == 0:
         return (None, score_position(board, me))
@@ -135,7 +135,7 @@ def minimax(board, depth, alpha, beta, maximizing, me):
         best_col = cols[0]
         for col in cols:
             temp = copy.deepcopy(board) 
-            drop_piece(temp, col, True )
+            drop_piece(temp, col, opp )
             _, s = minimax(temp, depth-1, alpha, beta, True, me)
             if s < best_score:
                 best_score = s 
