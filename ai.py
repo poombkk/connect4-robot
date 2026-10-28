@@ -6,8 +6,9 @@ from board import *
 
 def valid_columns(board):
     c = []
+    acols = [3, 2, 4, 1, 5, 0, 6]
     for r in range(COLS):
-        if is_valid_move(board, r):
+        if is_valid_move(board, acols[r]):
             c.append(r)
     return c
 
@@ -36,7 +37,8 @@ def score_window(window, player):
         return 25
     if theirs == 3 and empty == 1:
         return -50 # ลบ!
-    
+    if theirs == 2 and empty == 2:
+        return -20 # ลบ!    
     return 0
 
 def score_position(board, player):
@@ -52,37 +54,37 @@ def score_position(board, player):
                 for w in range(4):
                     # up
                     if d == 0 and r <= 2:
-                        if board[r + w][c] == opp:
-                            window = []
-                            break
+                        # if board[r + w][c] == opp:
+                        #     window = []
+                        #     break
                         window.append(board[r + w][c])
 
                     # upright
                     if d == 1 and r <= 2 and c <= 3:
-                        if r >= 0 and board[r + w - 1][c + w] == EMPTY:
-                            window = []
-                            break
-                        if board[r + w][c + w] == opp:
-                            window = []
-                            break
+                        # if r > 0 and board[r + w - 1][c + w] == EMPTY:
+                        #     window = []
+                        #     break
+                        # if board[r + w][c + w] == opp:
+                        #     window = []
+                        #     break
                         window.append(board[r + w][c + w])
                     # right
                     if d == 2 and c <= 3:
-                        if r >= 0 and board[r - 1][c + w] == EMPTY:
-                            window = []
-                            break
-                        if board[r][c + w] == opp:
-                            window = []
-                            break
+                        # if r > 0 and board[r - 1][c + w] == EMPTY:
+                        #     window = []
+                        #     break
+                        # if board[r][c + w] == opp:
+                        #     window = []
+                        #     break
                         window.append(board[r][c + w])
                     # downright
                     if d == 3 and c <= 3 and r >= 3:
-                        if board[r - w - 1][c + w] == EMPTY:
-                            window = []
-                            break
-                        if board[r - w][c + w] == opp:
-                            window = []
-                            break
+                        # if board[r - w - 1][c + w] == EMPTY:
+                        #     window = []
+                        #     break
+                        # if board[r - w][c + w] == opp:
+                        #     window = []
+                        #     break
                         window.append(board[r - w][c + w])
 
                 score += score_window(window ,player)
@@ -145,7 +147,7 @@ def minimax(board, depth, alpha, beta, maximizing, me):
                 break
         return (best_col, best_score)
     
-def minimax_move(board, player, depth=7):
+def minimax_move(board, player, depth=5):
     col, _ = minimax(board, depth, -math.inf, math.inf, True, player)
     return col
 

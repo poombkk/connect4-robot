@@ -22,6 +22,7 @@ def main():
     while True:
         #col = ask_column(board, player)
         col = brains[player](board, player)
+        print('drop = ' + str(col))
         drop_piece(board, col, player)
         if player == 1:
             Winner = "RED"
